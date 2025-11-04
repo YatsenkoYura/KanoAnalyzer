@@ -1,9 +1,24 @@
 from module.text_processor import TextProcessor
+from module.keyword_extractor import KeywordExtractor
+
 
 if __name__ == "__main__":
-    text_processor = TextProcessor("Мама у моря мыла тару, а я отдыхал")
-    #text_processor.tokenize()
-    #text_processor.normalize()
-    #text_processor.erase_stop_word()
-    #text_processor.lematize()
-    print(text_processor.apply_text_processing())
+    start_text = """
+Председатель Центрального банка России Владимир Путин обсудил с экономистами текущую 
+ситуацию на финансовых рынках. По словам главы ЦБ, инфляция остается одним из главных 
+вызовов для национальной экономики. Эксперты выделили три ключевых направления развития: 
+повышение инвестиций в технологии, снижение налоговых ставок и модернизацию инфраструктуры.
+
+Банк России считает необходимым усилить контроль над финансовыми потоками и предотвратить 
+отток капитала. Вице-премьер Максим Орешкин заявил о возможности снизить процентные ставки 
+в течение квартала. Министр финансов Антон Силуанов отметил, что государственный долг находится 
+на приемлемом уровне.
+
+Аналитики российских банков прогнозируют рост ВВП на 2-3 процента в следующем году. 
+Международный валютный фонд рекомендует России провести структурные реформы. Эксперты 
+обсудили влияние санкций на развитие нефтегазовой промышленности.
+"""
+    text_processor = TextProcessor(start_text)
+    extractor = KeywordExtractor(text_processor.apply_text_processing(), text_processor.raw_text)
+    keywords = extractor.extract(words=15, debug=True)
+    print(keywords)
