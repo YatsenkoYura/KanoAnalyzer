@@ -7,7 +7,7 @@ class TextProcessor:
         self.stop_words = []
         with open('src/stopwords-ru.txt', 'r') as f:
             for line in f:
-                stop_words.append(re.sub("\n", "", line))
+                self.stop_words.append(re.sub("\n", "", line))
 
     def tokenize(self, text : str) -> list[str]:
         target_text = text

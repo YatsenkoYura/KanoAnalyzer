@@ -1,7 +1,5 @@
-from module.text_processor import TextProcessor
-from module.keyword_extractor import KeywordExtractor
-
-
+from module.pipeline import Pipeline
+from module.keyword_extractor import ExtractorConfig
 if __name__ == "__main__":
     start_text = """
 Председатель Центрального банка России Владимир Путин обсудил с экономистами текущую 
@@ -18,7 +16,14 @@ if __name__ == "__main__":
 Международный валютный фонд рекомендует России провести структурные реформы. Эксперты 
 обсудили влияние санкций на развитие нефтегазовой промышленности.
 """
-    text_processor = TextProcessor(start_text)
-    extractor = KeywordExtractor(text_processor.apply_text_processing(), text_processor.raw_text)
-    keywords = extractor.extract(words=15, debug=True)
-    print(keywords)
+
+    extractor_config = ExtractorConfig(
+        lan="en",
+        dedupFunc="seqm",
+        dedupLim=0.9,
+        windowsSize=1
+    )
+    pipeline = Pipeline(extractor_config=extractor_config)
+
+    print(pipeline.run_text_processor(start_text))
+    print(pipeline.run_extract_keyword(start_text, 5, 3))

@@ -4,7 +4,6 @@ from module.text_processor import TextProcessor
 class Pipeline:
     def __init__(self, extractor_config : ExtractorConfig):
         self.text_processor = TextProcessor()
-
         self.extractor_config = extractor_config
         self.keyword_extractor = KeywordExtractor(self.extractor_config)
 
@@ -13,5 +12,6 @@ class Pipeline:
 
     def run_extract_keyword(self, raw_text : str, top : int, n: int) -> list[str]:
         return self.keyword_extractor.extract(raw_text, top, n)
+    
         
 
